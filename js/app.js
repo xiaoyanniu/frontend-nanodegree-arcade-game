@@ -1,13 +1,16 @@
-// Define the generic variables
+// Define the variables
 var blockWidth = 101,
     blockHeight = 83,
     totalScore = 0,
     character = 0;
+    playerStartX = 2 * blockWidth,
+    playerStartY = 5 * blockHeight - 20;
+
 //Define which character to select from the very first page
 var Selector = function() {
     this.sprite = 'images/Selector.png';
     this.x = 0;
-    this.y = 229;
+    this.y = 220;
 };
 
 var selectorEventListener = function(e) {
@@ -18,17 +21,6 @@ var selectorEventListener = function(e) {
     };
 
     selector.handleInput(allowedKeys[e.keyCode]);
-};
-
-var playerEventListener = function(e) {
-    var allowedKeys = {
-        37: 'left',
-        38: 'up',
-        39: 'right',
-        40: 'down'
-    };
-
-    player.handleInput(allowedKeys[e.keyCode]);
 };
 
 // For Rendering the selector image.
@@ -55,7 +47,11 @@ Selector.prototype.handleInput = function(key) {
             break;
         case 'enter':
             character = Math.floor(this.x / blockWidth) + 1;
+            document.removeEventListener('keyup', selectorEventListener);
             document.addEventListener('keyup', playerEventListener);
+            // player.x = playerStartX;
+            // player.y = playerStartY;
+            player = new Player();
             break;
     }
 };
@@ -113,13 +109,21 @@ Enemy.prototype.RandomXSpeed = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-var playerStartX = 2 * blockWidth,
-    playerStartY = 5 * blockHeight - 20;
 
 var Player = function() {
-    this.sprite = '';
     this.x = playerStartX;
     this.y = playerStartY;
+};
+
+var playerEventListener = function(e) {
+    var allowedKeys = {
+        37: 'left',
+        38: 'up',
+        39: 'right',
+        40: 'down'
+    };
+
+    player.handleInput(allowedKeys[e.keyCode]);
 };
 
 Player.prototype.update = function() {
@@ -143,7 +147,7 @@ Player.prototype.update = function() {
             this.sprite = 'images/char-boy.png';
             break;
     }
-    if (this.y < blockHeight-20) {
+    if (this.y < blockHeight - 20) {
         this.x = playerStartX;
         this.y = playerStartY;
         totalScore += 1;
