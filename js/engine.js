@@ -197,7 +197,7 @@ var Engine = (function(global) {
         totalScore = 0;
         selector.x = 0;
         document.getElementsByTagName('canvas')[0].focus();
-
+        document.addEventListener('keyup', selectorEventListener);
     }
 
     /* Go ahead and load all of the images we know we're going to need to
