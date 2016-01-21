@@ -28,6 +28,7 @@ var Engine = (function(global) {
     canvas.width = 505;
     canvas.height = 606;
     doc.body.appendChild(canvas);
+    document.getElementsByTagName('canvas')[0].setAttribute('tabindex', -1);
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
@@ -48,8 +49,8 @@ var Engine = (function(global) {
         if (character === 0) {
             renderCharacterSelector();
         } else {
-        update(dt);
-        render();
+            update(dt);
+            render();
         }
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
@@ -182,7 +183,7 @@ var Engine = (function(global) {
     function renderScore() {
         ctx.fillStyle = "#ffffff";
         ctx.font = "20px Arial";
-        var text = "Score: " + totalScore;
+        var text = "Total Score: " + totalScore;
         ctx.fillText(text, 20, 80);
     }
 
@@ -195,6 +196,8 @@ var Engine = (function(global) {
         character = 0;
         totalScore = 0;
         selector.x = 0;
+        document.getElementsByTagName('canvas')[0].focus();
+
     }
 
     /* Go ahead and load all of the images we know we're going to need to

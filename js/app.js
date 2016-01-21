@@ -1,13 +1,13 @@
-//Define which character to select from the very first page
+// Define the generic variables
 var blockWidth = 101,
     blockHeight = 83,
     totalScore = 0,
     character = 0;
-
+//Define which character to select from the very first page
 var Selector = function() {
     this.sprite = 'images/Selector.png';
     this.x = 0;
-    this.y = 220;
+    this.y = 229;
 };
 
 var selectorEventListener = function(e) {
@@ -69,8 +69,8 @@ var Enemy = function() {
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
     this.xPosition = [-100, 600];
-    this.yPosition = [60, 140, 220];
-    this.speed = [100, 600];
+    this.yPosition = [63, 146, 229];
+    this.speedRange = [100, 600];
 
     this.reset();
 };
@@ -94,20 +94,18 @@ Enemy.prototype.render = function() {
 };
 
 Enemy.prototype.reset = function() {
-    var startPosition = this.xPosition[0];
-
-    this.x = startPosition;
+    this.x = this.xPosition[0];
     this.y = this.RandomYPosition();
-    this.speed = this.RandomYSpeed();
+    this.speed = this.RandomXSpeed();
 };
 
 Enemy.prototype.RandomYPosition = function() {
     return this.yPosition[Math.floor(Math.random() * 3)];
 };
 
-Enemy.prototype.RandomYSpeed = function() {
-    var minSpeed = this.speed[0],
-        maxSpeed = this.speed[1];
+Enemy.prototype.RandomXSpeed = function() {
+    var minSpeed = this.speedRange[0],
+        maxSpeed = this.speedRange[1];
 
     return Math.floor(Math.random() * (maxSpeed - minSpeed)) + minSpeed;
 };
@@ -157,18 +155,24 @@ Player.prototype.update = function() {
 };
 
 Player.prototype.checkCollisions = function() {
-    if (this.y >= 60 && this.y <= 220) {
+    if (this.y >= 63 && this.y <= 229) {
         // player is on road rows, check collisions
         // loop through each bug
+        var playerX = this.x,
+            playerY = this.y,
+            collided = false;
+
         allEnemies.forEach(function(enemy) {
             // is the bug on the same row as the player?
-            if (enemy.y == self.y) {
+            if (Math.abs(enemy.y - playerY) < 20) {
                 // is the bug on the player?
-                if (enemy.x >= player.x - 30 && enemy.x <= player.x + 30) {
-                    return true;
+                if (Math.abs(enemy.x - playerX) < 30) {
+                    collided = true;
                 }
             }
         });
+
+        return collided;
     }
 };
 
@@ -223,4 +227,3 @@ var selector = new Selector();
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', selectorEventListener);
-
