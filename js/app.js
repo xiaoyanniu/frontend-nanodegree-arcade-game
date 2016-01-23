@@ -2,7 +2,7 @@
 var blockWidth = 101,
     blockHeight = 83,
     totalScore = 0,
-    character = 0;
+    character = 0,
     playerStartX = 2 * blockWidth,
     playerStartY = 5 * blockHeight - 20;
 
@@ -13,6 +13,7 @@ var Selector = function() {
     this.y = 220;
 };
 
+//for selector, only allow the left arrow, the right arrow and the enter key
 var selectorEventListener = function(e) {
     var allowedKeys = {
         13: 'enter',
@@ -49,8 +50,6 @@ Selector.prototype.handleInput = function(key) {
             character = Math.floor(this.x / blockWidth) + 1;
             document.removeEventListener('keyup', selectorEventListener);
             document.addEventListener('keyup', playerEventListener);
-            // player.x = playerStartX;
-            // player.y = playerStartY;
             player = new Player();
             break;
     }
@@ -115,6 +114,7 @@ var Player = function() {
     this.y = playerStartY;
 };
 
+//for player, allow the left arrow, the right arrow, the up arrow, the down arrow and the enter key
 var playerEventListener = function(e) {
     var allowedKeys = {
         37: 'left',
@@ -185,6 +185,7 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+// For Handle the keyboard input for player.
 Player.prototype.handleInput = function(key) {
     switch (key) {
         case 'left':
@@ -229,5 +230,5 @@ var player = new Player();
 var selector = new Selector();
 
 // This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
+// Selector.handleInput() method.
 document.addEventListener('keyup', selectorEventListener);
