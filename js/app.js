@@ -1,10 +1,10 @@
 // Define the variables
-var blockWidth = 101,
-    blockHeight = 83,
+var BLOCK_WIDTH = 101,
+    BLOCK_HEIGHT = 83,
     totalScore = 0,
     character = 0,
-    playerStartX = 2 * blockWidth,
-    playerStartY = 5 * blockHeight - 20;
+    playerStartX = 2 * BLOCK_WIDTH,
+    playerStartY = 5 * BLOCK_HEIGHT - 20;
 
 //Define which character to select from the very first page
 var Selector = function() {
@@ -33,21 +33,21 @@ Selector.prototype.render = function() {
 Selector.prototype.handleInput = function(key) {
     switch (key) {
         case 'left':
-            if (this.x < blockWidth) {
+            if (this.x < BLOCK_WIDTH) {
                 this.x = this.x;
             } else {
-                this.x = this.x - blockWidth;
+                this.x = this.x - BLOCK_WIDTH;
             }
             break;
         case 'right':
-            if (this.x > 3 * blockWidth) {
+            if (this.x > 3 * BLOCK_WIDTH) {
                 this.x = this.x;
             } else {
-                this.x = this.x + blockWidth;
+                this.x = this.x + BLOCK_WIDTH;
             }
             break;
         case 'enter':
-            character = Math.floor(this.x / blockWidth) + 1;
+            character = Math.floor(this.x / BLOCK_WIDTH) + 1;
             document.removeEventListener('keyup', selectorEventListener);
             document.addEventListener('keyup', playerEventListener);
             player = new Player();
@@ -147,7 +147,7 @@ Player.prototype.update = function() {
             this.sprite = 'images/char-boy.png';
             break;
     }
-    if (this.y < blockHeight - 20) {
+    if (this.y < BLOCK_HEIGHT - 20) {
         this.x = playerStartX;
         this.y = playerStartY;
         totalScore += 1;
@@ -189,31 +189,31 @@ Player.prototype.render = function() {
 Player.prototype.handleInput = function(key) {
     switch (key) {
         case 'left':
-            if (this.x < blockWidth) {
+            if (this.x < BLOCK_WIDTH) {
                 this.x = this.x;
             } else {
-                this.x = this.x - blockWidth;
+                this.x = this.x - BLOCK_WIDTH;
             }
             break;
         case 'up':
-            if (this.y < blockHeight - 20) {
+            if (this.y < BLOCK_HEIGHT - 20) {
                 this.y = this.y;
             } else {
-                this.y = this.y - blockHeight;
+                this.y = this.y - BLOCK_HEIGHT;
             }
             break;
         case 'right':
-            if (this.x > blockWidth * 3) {
+            if (this.x > BLOCK_WIDTH * 3) {
                 this.x = this.x;
             } else {
-                this.x = this.x + blockWidth;
+                this.x = this.x + BLOCK_WIDTH;
             }
             break;
         case 'down':
-            if (this.y > blockHeight * 4) {
+            if (this.y > BLOCK_HEIGHT * 4) {
                 this.y = this.y;
             } else {
-                this.y = this.y + blockHeight;
+                this.y = this.y + BLOCK_HEIGHT;
             }
             break;
     }
